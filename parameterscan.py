@@ -1,7 +1,6 @@
 import numpy as np
 import subprocess
 import matplotlib.pyplot as plt
-from scipy.interpolate import CubicSpline # If you don't have this, you can use np.interp instead, but it may be less accurate
 import os
 
 # Parameters
@@ -15,7 +14,7 @@ g = 0.5
 d = 0.01
 
 
-alpha = 0.5  # 1 explicit, 0 implicit, 0.5 semi-implicit
+alpha = 0  # 1 explicit, 0 implicit, 0.5 semi-implicit
 
 if alpha == 1:
     alphastr = "expl"
@@ -64,6 +63,7 @@ param = dt
 # Simulations
 outputs = []
 totalsteps = []
+nsteps_list = []
 tau_list = []
 N_list = []
 error = np.zeros(nsimul)
@@ -105,6 +105,9 @@ for i in range(nsimul):
         NN = N[-1]
         N_list.append(NN)
         totalsteps.append(total_steps)
+
+        dt_val = param[i]
+        nsteps_list.append(int(round(tf/dt_val)))
 
         #TODO: calculate ratio and tau using interpolation, and store in tau_list
         ratio = N/Nfp # ratio as function of time ?! Nfp or NN ?!
@@ -186,9 +189,9 @@ plt.tight_layout()
 plt.savefig(os.path.join(outdir, f"{figstr}_tau_error.png"), dpi=300)
 
 plt.figure()
-plt.loglog(totalsteps, tau_err, 'r+-', label=f"{alphastr}")
-plt.xlabel("Total steps")
+plt.loglog(nsteps_list, tau_err, 'r+-', label=f"{alphastr}")
+plt.xlabel("nsteps (= tf/dt)")
 plt.ylabel("Relative error on tau")
 plt.grid(True, which="both", linestyle="--", linewidth=0.5)
 plt.tight_layout()
-plt.savefig(os.path.join(outdir, f"{figstr}_tau_error_vs_steps.png"), dpi=300)
+plt.savefig(os.path.join(outdir, f"{figstr}_tau_error_vs_nsteps.png"), dpi=300)

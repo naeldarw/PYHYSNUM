@@ -91,20 +91,15 @@ private:
       }
       else
       {
+        // Euler (semi) implicite 
+        double A, B, C;
         compute_f(f);
-        delta_N_EE = f*dt;
-      while((error>tol || iteration<3) && iteration<maxit){
-        // TODO : Implementer la méthode d'Euler implicite et semi_implicite (en utilisant delta_N_EE)
-        Ncontrol =  N;// Ncontrole est la solution de reference pour le calcul de l'erreur, elle doit etre mise a jour a chaque iteration
-        N = Nold + dt*(f*(1-alpha) + delta_N_EE/dt * alpha);
-        // TODO : Calculer l'erreur relative entre N et Ncontrol pour le critere d'arret de la methode iterative
-        error = fabs(N[0] - Ncontrol[0])/fabs(Ncontrol[0]);
-        iteration += 1;
-        compute_f(f);
-      }
-      if(iteration>=maxit && error>tol){
-        cout << "WARNING: maximum number of iterations reached, error: " << error << endl;
-      }
+        A = (1-alpha)*dt;
+        B = 1 - (1-alpha)*g*dt;
+        // C = -Nold[0] - alpha*f[0]; incorrect
+        C = -Nold[0] - (1-alpha)*dt*d - alpha*dt*f[0];
+        N = (-B + pow(pow(B, 2) - 4*A*C, 0.5))/(2*A);
+        Nold = N;
       }
     }
       else
