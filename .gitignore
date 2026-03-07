@@ -1,0 +1,21 @@
+# Python / env
+.venv/
+__pycache__/
+*.pyc
+
+# Build / binaries
+*.exe
+*.o
+*.obj
+
+# Generated outputs (anywhere in repo)
+**/conv_outputs/
+**/conv_outputs_tau/
+**/ex1e_analytic_tau/
+**/ex1e_analytic_tau_engine1/
+**/ex1e_analytic_tau_engine2/
+**/Outputs_g_0_d_0/
+**/Outputs_g_0.5_d_0.01/
+
+# Temporary output files
+*.out
