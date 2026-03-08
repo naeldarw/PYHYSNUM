@@ -3,7 +3,7 @@
 #include <cmath>          // librerie mathematique de base
 #include <iomanip>        // input output manipulators
 #include <valarray>       // valarray functions
-#include "../../common/ConfigFile.h" // Il contient les methodes pour lire inputs et ecrire outputs 
+#include "common/ConfigFile.h" // Il contient les methodes pour lire inputs et ecrire outputs 
 #include <numeric>
 
 using namespace std; // ouvrir un namespace avec la librerie c++ de base
